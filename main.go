@@ -42,19 +42,21 @@ func main() {
 	check(err)
 
 	currentByte := 0
+	lineNumber := int16(0)
 
-	read, err := decode(rom, currentByte)
+	read, err := decode(rom, currentByte, lineNumber)
 	check(err)
 	currentByte += read
 
 	for err == nil {
-		read, err = decode(rom, currentByte)
+		lineNumber++
+		read, err = decode(rom, currentByte, lineNumber)
 		currentByte += read
 	}
 
 }
 
-func decode(rom []byte, currentByte int) (int, error) {
+func decode(rom []byte, currentByte int, lineNumber int16) (int, error) {
 	bytesRead := 1
 
 	//convert byte to hex
@@ -64,661 +66,661 @@ func decode(rom []byte, currentByte int) (int, error) {
 
 	switch rom[currentByte] {
 	case 0x00:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x01:
-		fmt.Printf("LXI\tB,#$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tLXI\tB,#$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x02:
-		fmt.Println("STAX\tB")
+		fmt.Printf("%04x\tSTAX\tB\n", lineNumber)
 		break
 	case 0x03:
-		fmt.Println("INX\tB")
+		fmt.Printf("%04x\tINX\tB\n", lineNumber)
 		break
 	case 0x04:
-		fmt.Println("INR\tB")
+		fmt.Printf("%04x\tINR\tB\n", lineNumber)
 		break
 	case 0x05:
-		fmt.Println("DCR\tB")
+		fmt.Printf("%04x\tDCR\tB\n", lineNumber)
 		break
 	case 0x06:
-		fmt.Printf("MVI\tB,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tB,#$%02x\n", lineNumber, rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x07:
-		fmt.Println("RLC")
+		fmt.Printf("%04x\tRLC\n", lineNumber)
 		break
 	case 0x08:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x09:
-		fmt.Println("DAD\tB")
+		fmt.Printf("%04x\tDAD\tB\n", lineNumber)
 		break
 	case 0x0a:
-		fmt.Println("LDAX\tB")
+		fmt.Printf("%04x\tLDAX\tB\n", lineNumber)
 		break
 	case 0x0b:
-		fmt.Println("DCX\tB")
+		fmt.Printf("%04x\tDCX\tB\n", lineNumber)
 		break
 	case 0x0c:
-		fmt.Println("INR\tC")
+		fmt.Printf("%04x\tINR\tC\n", lineNumber)
 		break
 	case 0x0d:
-		fmt.Println("DCR\tC")
+		fmt.Printf("%04x\tDCR\tC\n", lineNumber)
 		break
 	case 0x0e:
-		fmt.Printf("MVI\tC,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tC,#$%02x\n", lineNumber, rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x0f:
-		fmt.Println("RRC")
+		fmt.Printf("%04x\tRRC\n", lineNumber)
 		break
 	case 0x10:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x11:
-		fmt.Printf("LXI\tD,#$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tLXI\tD,#$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x12:
-		fmt.Println("STAX\tD")
+		fmt.Printf("%04x\tSTAX\tD\n", lineNumber)
 		break
 	case 0x13:
-		fmt.Println("INX\tD")
+		fmt.Printf("%04x\tINX\tD\n", lineNumber)
 		break
 	case 0x14:
-		fmt.Println("INR\tD")
+		fmt.Printf("%04x\tINR\tD\n", lineNumber)
 		break
 	case 0x15:
-		fmt.Println("DCR\tD")
+		fmt.Printf("%04x\tDCR\tD\n", lineNumber)
 		break
 	case 0x16:
-		fmt.Printf("MVI\tD,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tD,#$%02x\n", lineNumber, rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x17:
-		fmt.Println("RAL")
+		fmt.Printf("%04x\tRAL\n", lineNumber)
 		break
 	case 0x18:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x19:
-		fmt.Println("DAD\tD")
+		fmt.Printf("%04x\tDAD\tD\n", lineNumber)
 		break
 	case 0x1a:
-		fmt.Println("LDAX\tD")
+		fmt.Printf("%04x\tLDAX\tD\n", lineNumber)
 		break
 	case 0x1b:
-		fmt.Println("DCX\tD")
+		fmt.Printf("%04x\tDCX\tD\n", lineNumber)
 		break
 	case 0x1c:
-		fmt.Println("INR\tE")
+		fmt.Printf("%04x\tINR\tE\n", lineNumber)
 		break
 	case 0x1d:
-		fmt.Println("DCR\tE")
+		fmt.Printf("%04x\tDCR\tE\n", lineNumber)
 		break
 	case 0x1e:
-		fmt.Printf("MVI\tE,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tE,#$%02x\n", lineNumber, rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x1f:
-		fmt.Println("RAR")
+		fmt.Printf("%04x\tRAR\n", lineNumber)
 		break
 	case 0x20:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x21:
-		fmt.Printf("LXI\tH,#$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tLXI\tH,#$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x22:
-		fmt.Printf("SHLD\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tSHLD\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x23:
-		fmt.Println("INX\tH")
+		fmt.Printf("%04x\tINX\tH\n", lineNumber)
 		break
 	case 0x24:
-		fmt.Println("INR\tH")
+		fmt.Printf("%04x\tINR\tH\n", lineNumber)
 		break
 	case 0x25:
-		fmt.Println("DCR\tH")
+		fmt.Printf("%04x\tDCR\tH\n", lineNumber)
 		break
 	case 0x26:
-		fmt.Printf("MVI\tH,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tH,#$%02x\n", rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x27:
-		fmt.Println("DAA")
+		fmt.Printf("%04x\tDAA\n", lineNumber)
 		break
 	case 0x28:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x29:
-		fmt.Println("DAD\tH")
+		fmt.Printf("%04x\tDAD\tH\n", lineNumber)
 		break
 	case 0x2a:
-		fmt.Printf("LHLD\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tLHLD\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x2b:
-		fmt.Println("DCX\tH")
+		fmt.Printf("%04x\tDCX\tH\n", lineNumber)
 		break
 	case 0x2c:
-		fmt.Println("INR\tL")
+		fmt.Printf("%04x\tINR\tL\n", lineNumber)
 		break
 	case 0x2d:
-		fmt.Println("DCR\tL")
+		fmt.Printf("%04x\tDCR\tL\n", lineNumber)
 		break
 	case 0x2e:
-		fmt.Printf("MVI\tL,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tL,#$%02x\n", lineNumber, rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x2f:
-		fmt.Println("CMA")
+		fmt.Printf("%04x\tCMA\n", lineNumber)
 		break
 	case 0x30:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x31:
-		fmt.Printf("LXI\tSP,#$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tLXI\tSP,#$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x32:
-		fmt.Printf("STA\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tSTA\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x33:
-		fmt.Println("INX\tSP")
+		fmt.Printf("%04x\tINX\tSP\n", lineNumber)
 		break
 	case 0x34:
-		fmt.Println("INR\tM")
+		fmt.Printf("%04x\tINR\tM\n", lineNumber)
 		break
 	case 0x35:
-		fmt.Println("DCR\tM")
+		fmt.Printf("%04x\tDCR\tM\n", lineNumber)
 		break
 	case 0x36:
-		fmt.Printf("MVI\tM,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tM,#$%02x\n", lineNumber, rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x37:
-		fmt.Println("STC")
+		fmt.Printf("%04x\tSTC\n", lineNumber)
 		break
 	case 0x38:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0x39:
-		fmt.Println("DAD\tSP")
+		fmt.Printf("%04x\tDAD\tSP\n", lineNumber)
 		break
 	case 0x3a:
-		fmt.Printf("LDA\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tLDA\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		bytesRead = 3
 		break
 	case 0x3b:
-		fmt.Println("DCX\tSP")
+		fmt.Printf("%04x\tDCX\tSP\n", lineNumber)
 		break
 	case 0x3c:
-		fmt.Println("INR\tA")
+		fmt.Printf("%04x\tINR\tA\n", lineNumber)
 		break
 	case 0x3d:
-		fmt.Println("DCR\tA")
+		fmt.Printf("%04x\tDCR\tA\n", lineNumber)
 		break
 	case 0x3e:
-		fmt.Printf("MVI\tA,#$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tMVI\tA,#$%02x\n", lineNumber, rom[currentByte+1])
 		bytesRead = 2
 		break
 	case 0x3f:
-		fmt.Println("CMC")
+		fmt.Printf("%04x\tCMC\n", lineNumber)
 		break
 	case 0x40:
-		fmt.Println("MOV\tB,B")
+		fmt.Printf("%04x\tMOV\tB,B\n", lineNumber)
 		break
 	case 0x41:
-		fmt.Println("MOV\tB,C")
+		fmt.Printf("%04x\tMOV\tB,C\n", lineNumber)
 		break
 	case 0x42:
-		fmt.Println("MOV\tB,D")
+		fmt.Printf("%04x\tMOV\tB,D\n", lineNumber)
 		break
 	case 0x43:
-		fmt.Println("MOV\tB,E")
+		fmt.Printf("%04x\tMOV\tB,E\n", lineNumber)
 		break
 	case 0x44:
-		fmt.Println("MOV\tB,H")
+		fmt.Printf("%04x\tMOV\tB,H\n", lineNumber)
 		break
 	case 0x45:
-		fmt.Println("MOV\tB,L")
+		fmt.Printf("%04x\tMOV\tB,L\n", lineNumber)
 		break
 	case 0x46:
-		fmt.Println("MOV\tB,M")
+		fmt.Printf("%04x\tMOV\tB,M\n", lineNumber)
 		break
 	case 0x47:
-		fmt.Println("MOV\tB,A")
+		fmt.Printf("%04x\tMOV\tB,A\n", lineNumber)
 		break
 	case 0x48:
-		fmt.Println("MOV\tC,B")
+		fmt.Printf("%04x\tMOV\tC,B\n", lineNumber)
 		break
 	case 0x49:
-		fmt.Println("MOV\tC,C")
+		fmt.Printf("%04x\tMOV\tC,C\n", lineNumber)
 		break
 	case 0x4a:
-		fmt.Println("MOV\tC,D")
+		fmt.Printf("%04x\tMOV\tC,D\n", lineNumber)
 		break
 	case 0x4b:
-		fmt.Println("MOV\tC,E")
+		fmt.Printf("%04x\tMOV\tC,E\n", lineNumber)
 		break
 	case 0x4c:
-		fmt.Println("MOV\tC,H")
+		fmt.Printf("%04x\tMOV\tC,H\n", lineNumber)
 		break
 	case 0x4d:
-		fmt.Println("MOV\tC,L")
+		fmt.Printf("%04x\tMOV\tC,L\n", lineNumber)
 		break
 	case 0x4e:
-		fmt.Println("MOV\tC,M")
+		fmt.Printf("%04x\tMOV\tC,M\n", lineNumber)
 		break
 	case 0x4f:
-		fmt.Println("MOV\tC,A")
+		fmt.Printf("%04x\tMOV\tC,A\n", lineNumber)
 		break
 	case 0x50:
-		fmt.Println("MOV\tD,B")
+		fmt.Printf("%04x\tMOV\tD,B\n", lineNumber)
 		break
 	case 0x51:
-		fmt.Println("MOV\tD,C")
+		fmt.Printf("%04x\tMOV\tD,C\n", lineNumber)
 		break
 	case 0x52:
-		fmt.Println("MOV\tD,D")
+		fmt.Printf("%04x\tMOV\tD,D\n", lineNumber)
 		break
 	case 0x53:
-		fmt.Println("MOV\tD,E")
+		fmt.Printf("%04x\tMOV\tD,E\n", lineNumber)
 		break
 	case 0x54:
-		fmt.Println("MOV\tD,H")
+		fmt.Printf("%04x\tMOV\tD,H\n", lineNumber)
 		break
 	case 0x55:
-		fmt.Println("MOV\tD,L")
+		fmt.Printf("%04x\tMOV\tD,L\n", lineNumber)
 		break
 	case 0x56:
-		fmt.Println("MOV\tD,M")
+		fmt.Printf("%04x\tMOV\tD,M\n", lineNumber)
 		break
 	case 0x57:
-		fmt.Println("MOV\tD,A")
+		fmt.Printf("%04x\tMOV\tD,A\n", lineNumber)
 		break
 	case 0x58:
-		fmt.Println("MOV\tE,B")
+		fmt.Printf("%04x\tMOV\tE,B\n", lineNumber)
 		break
 	case 0x59:
-		fmt.Println("MOV\tE,C")
+		fmt.Printf("%04x\tMOV\tE,C\n", lineNumber)
 		break
 	case 0x5a:
-		fmt.Println("MOV\tE,D")
+		fmt.Printf("%04x\tMOV\tE,D\n", lineNumber)
 		break
 	case 0x5b:
-		fmt.Println("MOV\tE,E")
+		fmt.Printf("%04x\tMOV\tE,E\n", lineNumber)
 		break
 	case 0x5c:
-		fmt.Println("MOV\tE,H")
+		fmt.Printf("%04x\tMOV\tE,H\n", lineNumber)
 		break
 	case 0x5d:
-		fmt.Println("MOV\tE,L")
+		fmt.Printf("%04x\tMOV\tE,L\n", lineNumber)
 		break
 	case 0x5e:
-		fmt.Println("MOV\tE,M")
+		fmt.Printf("%04x\tMOV\tE,M\n", lineNumber)
 		break
 	case 0x5f:
-		fmt.Println("MOV\tE,A")
+		fmt.Printf("%04x\tMOV\tE,A\n", lineNumber)
 		break
 	case 0x60:
-		fmt.Println("MOV\tH,B")
+		fmt.Printf("%04x\tMOV\tH,B\n", lineNumber)
 		break
 	case 0x61:
-		fmt.Println("MOV\tH,C")
+		fmt.Printf("%04x\tMOV\tH,C\n", lineNumber)
 		break
 	case 0x62:
-		fmt.Println("MOV\tH,D")
+		fmt.Printf("%04x\tMOV\tH,D\n", lineNumber)
 		break
 	case 0x63:
-		fmt.Println("MOV\tH,E")
+		fmt.Printf("%04x\tMOV\tH,E\n", lineNumber)
 		break
 	case 0x64:
-		fmt.Println("MOV\tH,H")
+		fmt.Printf("%04x\tMOV\tH,H\n", lineNumber)
 		break
 	case 0x65:
-		fmt.Println("MOV\tH,L")
+		fmt.Printf("%04x\tMOV\tH,L\n", lineNumber)
 		break
 	case 0x66:
-		fmt.Println("MOV\tH,M")
+		fmt.Printf("%04x\tMOV\tH,M\n", lineNumber)
 		break
 	case 0x67:
-		fmt.Println("MOV\tH,A")
+		fmt.Printf("%04x\tMOV\tH,A\n", lineNumber)
 		break
 	case 0x68:
-		fmt.Println("MOV\tL,B")
+		fmt.Printf("%04x\tMOV\tL,B\n", lineNumber)
 		break
 	case 0x69:
-		fmt.Println("MOV\tL,C")
+		fmt.Printf("%04x\tMOV\tL,C\n", lineNumber)
 		break
 	case 0x6a:
-		fmt.Println("MOV\tL,D")
+		fmt.Printf("%04x\tMOV\tL,D\n", lineNumber)
 		break
 	case 0x6b:
-		fmt.Println("MOV\tL,E")
+		fmt.Printf("%04x\tMOV\tL,E\n", lineNumber)
 		break
 	case 0x6c:
-		fmt.Println("MOV\tL,H")
+		fmt.Printf("%04x\tMOV\tL,H\n", lineNumber)
 		break
 	case 0x6d:
-		fmt.Println("MOV\tL,L")
+		fmt.Printf("%04x\tMOV\tL,L\n", lineNumber)
 		break
 	case 0x6e:
-		fmt.Println("MOV\tL,M")
+		fmt.Printf("%04x\tMOV\tL,M\n", lineNumber)
 		break
 	case 0x6f:
-		fmt.Println("MOV\tL,A")
+		fmt.Printf("%04x\tMOV\tL,A\n", lineNumber)
 		break
 	case 0x70:
-		fmt.Println("MOV\tM,B")
+		fmt.Printf("%04x\tMOV\tM,B\n", lineNumber)
 		break
 	case 0x71:
-		fmt.Println("MOV\tM,C")
+		fmt.Printf("%04x\tMOV\tM,C\n", lineNumber)
 		break
 	case 0x72:
-		fmt.Println("MOV\tM,D")
+		fmt.Printf("%04x\tMOV\tM,D\n", lineNumber)
 		break
 	case 0x73:
-		fmt.Println("MOV\tM,E")
+		fmt.Printf("%04x\tMOV\tM,E\n", lineNumber)
 		break
 	case 0x74:
-		fmt.Println("MOV\tM,H")
+		fmt.Printf("%04x\tMOV\tM,H\n", lineNumber)
 		break
 	case 0x75:
-		fmt.Println("MOV\tM,L")
+		fmt.Printf("%04x\tMOV\tM,L\n", lineNumber)
 		break
 	case 0x76:
-		fmt.Println("HLT")
+		fmt.Printf("%04x\tHLT\n", lineNumber)
 		break
 	case 0x77:
-		fmt.Println("MOV\tM,A")
+		fmt.Printf("%04x\tMOV\tM,A\n", lineNumber)
 		break
 	case 0x78:
-		fmt.Println("MOV\tA,B")
+		fmt.Printf("%04x\tMOV\tA,B\n", lineNumber)
 		break
 	case 0x79:
-		fmt.Println("MOV\tA,C")
+		fmt.Printf("%04x\tMOV\tA,C\n", lineNumber)
 		break
 	case 0x7a:
-		fmt.Println("MOV\tA,D")
+		fmt.Printf("%04x\tMOV\tA,D\n", lineNumber)
 		break
 	case 0x7b:
-		fmt.Println("MOV\tA,E")
+		fmt.Printf("%04x\tMOV\tA,E\n", lineNumber)
 		break
 	case 0x7c:
-		fmt.Println("MOV\tA,H")
+		fmt.Printf("%04x\tMOV\tA,H\n", lineNumber)
 		break
 	case 0x7d:
-		fmt.Println("MOV\tA,L")
+		fmt.Printf("%04x\tMOV\tA,L\n", lineNumber)
 		break
 	case 0x7e:
-		fmt.Println("MOV\tA,M")
+		fmt.Printf("%04x\tMOV\tA,M\n", lineNumber)
 		break
 	case 0x7f:
-		fmt.Println("MOV\tA,A")
+		fmt.Printf("%04x\tMOV\tA,A\n", lineNumber)
 		break
 	case 0x80:
-		fmt.Println("ADD\tB")
+		fmt.Printf("%04x\tADD\tB\n", lineNumber)
 		break
 	case 0x81:
-		fmt.Println("ADD\tC")
+		fmt.Printf("%04x\tADD\tC\n", lineNumber)
 		break
 	case 0x82:
-		fmt.Println("ADD\tD")
+		fmt.Printf("%04x\tADD\tD\n", lineNumber)
 		break
 	case 0x83:
-		fmt.Println("ADD\tE")
+		fmt.Printf("%04x\tADD\tE\n", lineNumber)
 		break
 	case 0x84:
-		fmt.Println("ADD\tH")
+		fmt.Printf("%04x\tADD\tH\n", lineNumber)
 		break
 	case 0x85:
-		fmt.Println("ADD\tL")
+		fmt.Printf("%04x\tADD\tL\n", lineNumber)
 		break
 	case 0x86:
-		fmt.Println("ADD\tM")
+		fmt.Printf("%04x\tADD\tM\n", lineNumber)
 		break
 	case 0x87:
-		fmt.Println("ADD\tA")
+		fmt.Printf("%04x\tADD\tA\n", lineNumber)
 		break
 	case 0x88:
-		fmt.Println("ADC\tB")
+		fmt.Printf("%04x\tADC\tB\n", lineNumber)
 		break
 	case 0x89:
-		fmt.Println("ADC\tC")
+		fmt.Printf("%04x\tADC\tC\n", lineNumber)
 		break
 	case 0x8a:
-		fmt.Println("ADC\tD")
+		fmt.Printf("%04x\tADC\tD\n", lineNumber)
 		break
 	case 0x8b:
-		fmt.Println("ADC\tE")
+		fmt.Printf("%04x\tADC\tE\n", lineNumber)
 		break
 	case 0x8c:
-		fmt.Println("ADC\tH")
+		fmt.Printf("%04x\tADC\tH\n", lineNumber)
 		break
 	case 0x8d:
-		fmt.Println("ADC\tL")
+		fmt.Printf("%04x\tADC\tL\n", lineNumber)
 		break
 	case 0x8e:
-		fmt.Println("ADC\tM")
+		fmt.Printf("%04x\tADC\tM\n", lineNumber)
 		break
 	case 0x8f:
-		fmt.Println("ADC\tA")
+		fmt.Printf("%04x\tADC\tA\n", lineNumber)
 		break
 	case 0x90:
-		fmt.Println("SUB\tB")
+		fmt.Printf("%04x\tSUB\tB\n", lineNumber)
 		break
 	case 0x91:
-		fmt.Println("SUB\tC")
+		fmt.Printf("%04x\tSUB\tC\n", lineNumber)
 		break
 	case 0x92:
-		fmt.Println("SUB\tD")
+		fmt.Printf("%04x\tSUB\tD\n", lineNumber)
 		break
 	case 0x93:
-		fmt.Println("SUB\tE")
+		fmt.Printf("%04x\tSUB\tE\n", lineNumber)
 		break
 	case 0x94:
-		fmt.Println("SUB\tH")
+		fmt.Printf("%04x\tSUB\tH\n", lineNumber)
 		break
 	case 0x95:
-		fmt.Println("SUB\tL")
+		fmt.Printf("%04x\tSUB\tL\n", lineNumber)
 		break
 	case 0x96:
-		fmt.Println("SUB\tM")
+		fmt.Printf("%04x\tSUB\tM\n", lineNumber)
 		break
 	case 0x97:
-		fmt.Println("SUB\tA")
+		fmt.Printf("%04x\tSUB\tA\n", lineNumber)
 		break
 	case 0x98:
-		fmt.Println("SBB\tB")
+		fmt.Printf("%04x\tSBB\tB\n", lineNumber)
 		break
 	case 0x99:
-		fmt.Println("SBB\tC")
+		fmt.Printf("%04x\tSBB\tC\n", lineNumber)
 		break
 	case 0x9a:
-		fmt.Println("SBB\tD")
+		fmt.Printf("%04x\tSBB\tD\n", lineNumber)
 		break
 	case 0x9b:
-		fmt.Println("SBB\tE")
+		fmt.Printf("%04x\tSBB\tE\n", lineNumber)
 		break
 	case 0x9c:
-		fmt.Println("SBB\tH")
+		fmt.Printf("%04x\tSBB\tH\n", lineNumber)
 		break
 	case 0x9d:
-		fmt.Println("SBB\tL")
+		fmt.Printf("%04x\tSBB\tL\n", lineNumber)
 		break
 	case 0x9e:
-		fmt.Println("SBB\tM")
+		fmt.Printf("%04x\tSBB\tM\n", lineNumber)
 		break
 	case 0x9f:
-		fmt.Println("SBB\tA")
+		fmt.Printf("%04x\tSBB\tA\n", lineNumber)
 		break
 	case 0xa0:
-		fmt.Println("ANA\tB")
+		fmt.Printf("%04x\tANA\tB\n", lineNumber)
 		break
 	case 0xa1:
-		fmt.Println("ANA\tC")
+		fmt.Printf("%04x\tANA\tC\n", lineNumber)
 		break
 	case 0xa2:
-		fmt.Println("ANA\tD")
+		fmt.Printf("%04x\tANA\tD\n", lineNumber)
 		break
 	case 0xa3:
-		fmt.Println("ANA\tE")
+		fmt.Printf("%04x\tANA\tE\n", lineNumber)
 		break
 	case 0xa4:
-		fmt.Println("ANA\tH")
+		fmt.Printf("%04x\tANA\tH\n", lineNumber)
 		break
 	case 0xa5:
-		fmt.Println("ANA\tL")
+		fmt.Printf("%04x\tANA\tL\n", lineNumber)
 		break
 	case 0xa6:
-		fmt.Println("ANA\tM")
+		fmt.Printf("%04x\tANA\tM\n", lineNumber)
 		break
 	case 0xa7:
-		fmt.Println("ANA\tA")
+		fmt.Printf("%04x\tANA\tA\n", lineNumber)
 		break
 	case 0xa8:
-		fmt.Println("XRA\tB")
+		fmt.Printf("%04x\tXRA\tB\n", lineNumber)
 		break
 	case 0xa9:
-		fmt.Println("XRA\tC")
+		fmt.Printf("%04x\tXRA\tC\n", lineNumber)
 		break
 	case 0xaa:
-		fmt.Println("XRA\tD")
+		fmt.Printf("%04x\tXRA\tD\n", lineNumber)
 		break
 	case 0xab:
-		fmt.Println("XRA\tE")
+		fmt.Printf("%04x\tXRA\tE\n", lineNumber)
 		break
 	case 0xac:
-		fmt.Println("XRA\tH")
+		fmt.Printf("%04x\tXRA\tH\n", lineNumber)
 		break
 	case 0xad:
-		fmt.Println("XRA\tL")
+		fmt.Printf("%04x\tXRA\tL\n", lineNumber)
 		break
 	case 0xae:
-		fmt.Println("XRA\tM")
+		fmt.Printf("%04x\tXRA\tM\n", lineNumber)
 		break
 	case 0xaf:
-		fmt.Println("XRA\tA")
+		fmt.Printf("%04x\tXRA\tA\n", lineNumber)
 		break
 	case 0xb0:
-		fmt.Println("ORA\tB")
+		fmt.Printf("%04x\tORA\tB\n", lineNumber)
 		break
 	case 0xb1:
-		fmt.Println("ORA\tC")
+		fmt.Printf("%04x\tORA\tC\n", lineNumber)
 		break
 	case 0xb2:
-		fmt.Println("ORA\tD")
+		fmt.Printf("%04x\tORA\tD\n", lineNumber)
 		break
 	case 0xb3:
-		fmt.Println("ORA\tE")
+		fmt.Printf("%04x\tORA\tE\n", lineNumber)
 		break
 	case 0xb4:
-		fmt.Println("ORA\tH")
+		fmt.Printf("%04x\tORA\tH\n", lineNumber)
 		break
 	case 0xb5:
-		fmt.Println("ORA\tL")
+		fmt.Printf("%04x\tORA\tL\n", lineNumber)
 		break
 	case 0xb6:
-		fmt.Println("ORA\tM")
+		fmt.Printf("%04x\tORA\tM\n", lineNumber)
 		break
 	case 0xb7:
-		fmt.Println("ORA\tA")
+		fmt.Printf("%04x\tORA\tA\n", lineNumber)
 		break
 	case 0xb8:
-		fmt.Println("CMP\tB")
+		fmt.Printf("%04x\tCMP\tB\n", lineNumber)
 		break
 	case 0xb9:
-		fmt.Println("CMP\tC")
+		fmt.Printf("%04x\tCMP\tC\n", lineNumber)
 		break
 	case 0xba:
-		fmt.Println("CMP\tD")
+		fmt.Printf("%04x\tCMP\tD\n", lineNumber)
 		break
 	case 0xbb:
-		fmt.Println("CMP\tE")
+		fmt.Printf("%04x\tCMP\tE\n", lineNumber)
 		break
 	case 0xbc:
-		fmt.Println("CMP\tH")
+		fmt.Printf("%04x\tCMP\tH\n", lineNumber)
 		break
 	case 0xbd:
-		fmt.Println("CMP\tL")
+		fmt.Printf("%04x\tCMP\tL\n", lineNumber)
 		break
 	case 0xbe:
-		fmt.Println("CMP\tM")
+		fmt.Printf("%04x\tCMP\tM\n", lineNumber)
 		break
 	case 0xbf:
-		fmt.Println("CMP\tA")
+		fmt.Printf("%04x\tCMP\tA\n", lineNumber)
 		break
 	case 0xc0:
-		fmt.Println("RNZ")
+		fmt.Printf("%04x\tRNZ\n", lineNumber)
 		break
 	case 0xc1:
-		fmt.Println("POP\tB")
+		fmt.Printf("%04x\tPOP\tB\n", lineNumber)
 		break
 	case 0xc2:
-		fmt.Printf("JNZ\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJNZ\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xc3:
-		fmt.Printf("JMP\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJMP\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xc4:
-		fmt.Printf("CNZ\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCNZ\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xc5:
-		fmt.Println("PUSH\tB")
+		fmt.Printf("%04x\tPUSH\tB\n", lineNumber)
 		break
 	case 0xc6:
-		fmt.Printf("ADI\t$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tADI\t$%02x\n", lineNumber, rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xc7:
-		fmt.Println("RST\t0")
+		fmt.Printf("%04x\tRST\t0\n", lineNumber)
 		break
 	case 0xc8:
-		fmt.Println("RZ")
+		fmt.Printf("%04x\tRZ\n", lineNumber)
 		break
 	case 0xc9:
-		fmt.Println("RET")
+		fmt.Printf("%04x\tRET\n", lineNumber)
 		break
 	case 0xca:
-		fmt.Printf("JZ\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJZ\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xcb:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0xcc:
-		fmt.Printf("CZ\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCZ\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xcd:
-		fmt.Printf("CALL\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCALL\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xce:
-		fmt.Printf("ACI\t$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tACI\t$%02x\n", lineNumber, rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xcf:
-		fmt.Println("RST\t1")
+		fmt.Printf("%04x\tRST\t1\n", lineNumber)
 		break
 	case 0xd0:
-		fmt.Println("RNC")
+		fmt.Printf("%04x\tRNC\n", lineNumber)
 		break
 	case 0xd1:
-		fmt.Println("POP\tD")
+		fmt.Printf("%04x\tPOP\tD\n", lineNumber)
 		break
 	case 0xd2:
-		fmt.Printf("JNC\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJNC\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xd3:
@@ -726,27 +728,27 @@ func decode(rom []byte, currentByte int) (int, error) {
 		currentByte = 2
 		break
 	case 0xd4:
-		fmt.Printf("CNC\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCNC\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xd5:
-		fmt.Println("PUSH\tD")
+		fmt.Printf("%04x\tPUSH\tD\n", lineNumber)
 		break
 	case 0xd6:
 		fmt.Printf("SUI\t$%02x\n", rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xd7:
-		fmt.Println("RST\t2")
+		fmt.Printf("%04x\tRST\t2\n", lineNumber)
 		break
 	case 0xd8:
-		fmt.Println("RC")
+		fmt.Printf("%04x\tRC\n", lineNumber)
 		break
 	case 0xd9:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0xda:
-		fmt.Printf("JC\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJC\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xdb:
@@ -754,129 +756,129 @@ func decode(rom []byte, currentByte int) (int, error) {
 		currentByte = 2
 		break
 	case 0xdc:
-		fmt.Printf("CC\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCC\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xdd:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0xde:
-		fmt.Printf("SBI\t$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tSBI\t$%02x\n", lineNumber, rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xdf:
-		fmt.Println("RST\t3")
+		fmt.Printf("%04x\tRST\t3\n", lineNumber)
 		break
 	case 0xe0:
-		fmt.Println("RPO")
+		fmt.Printf("%04x\tRPO\n", lineNumber)
 		break
 	case 0xe1:
-		fmt.Println("POP\tH")
+		fmt.Printf("%04x\tPOP\tH\n", lineNumber)
 		break
 	case 0xe2:
-		fmt.Printf("JPO\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJPO\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xe3:
-		fmt.Println("XTHL")
+		fmt.Printf("%04x\tXTHL\n", lineNumber)
 		break
 	case 0xe4:
-		fmt.Printf("CPO\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCPO\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xe5:
-		fmt.Println("PUSH\tH")
+		fmt.Printf("%04x\tPUSH\tH\n", lineNumber)
 		break
 	case 0xe6:
 		fmt.Printf("ANI\t$%02x\n", rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xe7:
-		fmt.Println("RST\t4")
+		fmt.Printf("%04x\tRST\t4\n", lineNumber)
 		break
 	case 0xe8:
-		fmt.Println("RPE")
+		fmt.Printf("%04x\tRPE\n", lineNumber)
 		break
 	case 0xe9:
-		fmt.Println("PCHL")
+		fmt.Printf("%04x\tPCHL\n", lineNumber)
 		break
 	case 0xea:
-		fmt.Printf("JPE\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJPE\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xeb:
-		fmt.Println("XCHG")
+		fmt.Printf("%04x\tXCHG\n", lineNumber)
 		break
 	case 0xec:
-		fmt.Printf("CPE\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCPE\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xed:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0xee:
-		fmt.Printf("XRI\t$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tXRI\t$%02x\n", lineNumber, rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xef:
-		fmt.Println("RST\t5")
+		fmt.Printf("%04x\tRST\t5\n", lineNumber)
 		break
 	case 0xf0:
-		fmt.Println("RP")
+		fmt.Printf("%04x\tRP\n", lineNumber)
 		break
 	case 0xf1:
-		fmt.Println("POP\tPSW")
+		fmt.Printf("%04x\tPOP\tPSW\n", lineNumber)
 		break
 	case 0xf2:
-		fmt.Printf("JP\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJP\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xf3:
-		fmt.Println("DI")
+		fmt.Printf("%04x\tDI\n", lineNumber)
 		break
 	case 0xf4:
-		fmt.Printf("CP\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCP\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xf5:
-		fmt.Println("PUSH\tPSW")
+		fmt.Printf("%04x\tPUSH\tPSW\n", lineNumber)
 		break
 	case 0xf6:
-		fmt.Printf("ORI\t$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tORI\t$%02x\n", lineNumber, rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xf7:
-		fmt.Println("RST\t6")
+		fmt.Printf("%04x\tRST\t6\n", lineNumber)
 		break
 	case 0xf8:
-		fmt.Println("RM")
+		fmt.Printf("%04x\tRM\n", lineNumber)
 		break
 	case 0xf9:
-		fmt.Println("SPHL")
+		fmt.Printf("%04x\tSPHL\n", lineNumber)
 		break
 	case 0xfa:
-		fmt.Printf("JM\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tJM\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xfb:
-		fmt.Println("EI")
+		fmt.Printf("%04x\tEI\n", lineNumber)
 		break
 	case 0xfc:
-		fmt.Printf("CM\t$%02x%02x\n", rom[currentByte+2], rom[currentByte+1])
+		fmt.Printf("%04x\tCM\t$%02x%02x\n", lineNumber, rom[currentByte+2], rom[currentByte+1])
 		currentByte = 3
 		break
 	case 0xfd:
-		fmt.Println("NOP")
+		fmt.Printf("%04x\tNOP\n", lineNumber)
 		break
 	case 0xfe:
-		fmt.Printf("CPI\t$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tCPI\t$%02x\n", lineNumber, rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xff:
-		fmt.Println("RST\t7")
+		fmt.Printf("%04x\tRST\t7\n", lineNumber)
 		break
 	default:
-		fmt.Println("Unknown opcode")
+		fmt.Printf("%04x\t#\tUnknown opcode: $%02x\n", lineNumber, rom[currentByte])
 	}
 
 	return bytesRead, nil
