@@ -724,7 +724,7 @@ func decode(rom []byte, currentByte int, lineNumber int16) (int, error) {
 		currentByte = 3
 		break
 	case 0xd3:
-		fmt.Printf("OUT\t$%02x\n", rom[currentByte+1])
+		fmt.Printf("%04x\tOUT\t$%02x\n", lineNumber, rom[currentByte+1])
 		currentByte = 2
 		break
 	case 0xd4:
